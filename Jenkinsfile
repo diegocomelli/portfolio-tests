@@ -2,25 +2,19 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Checkout') {
+        stage('Instalar dependências') {
             steps {
-                checkout scm
+                sh '''
+                    npm install
+                    npx playwright install --with-deps
+                '''
             }
         }
 
-        stage('Executar Testes Playwright') {
+        stage('Executar testes Playwright') {
             steps {
                 sh '''
-                    docker run --rm \
-                    -v $WORKSPACE:/work \
-                    -w /work \
-                    mcr.microsoft.com/playwright:v1.54.2-noble \
-                    bash -c "
-                    npm install &&
-                    npx playwright install &&
                     npx playwright test
-                    "
                 '''
             }
         }
