@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh '''
                     npm install
-                    npx playwright install --with-deps
+                    npx playwright install chromium
                 '''
             }
         }
