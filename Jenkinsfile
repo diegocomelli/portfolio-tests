@@ -8,7 +8,7 @@ pipeline {
                 docker run --rm \
                   -v /mnt/jenkins/workspace/teste-login-site:/work \
                   -w /work \
-                  mcr.microsoft.com/playwright:v1.54.2-noble \
+                  mcr.microsoft.com/playwright:v1.61.1-noble \
                   bash -c "npm install && npx playwright test"
                 '''
             }
