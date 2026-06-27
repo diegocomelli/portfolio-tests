@@ -9,10 +9,7 @@ pipeline {
                   -v $WORKSPACE:/work \
                   -w /work \
                   mcr.microsoft.com/playwright:v1.54.2-noble \
-                  bash -c "
-                    npm install &&
-                    npx playwright test
-                  "
+                  bash -c "npm install && npx playwright test"
                 '''
             }
         }
