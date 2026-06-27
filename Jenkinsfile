@@ -2,19 +2,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Instalar dependências') {
+        stage('Executar Testes Playwright') {
             steps {
                 sh '''
-                    npm install
-                    npx playwright install chromium
-                '''
-            }
-        }
-
-        stage('Executar testes Playwright') {
-            steps {
-                sh '''
+                docker run --rm \
+                  -v $WORKSPACE:/work \
+                  -w /work \
+                  mcr.microsoft.com/playwright:v1.54.2-noble \
+                  bash -c "
+                    npm install &&
                     npx playwright test
+                  "
                 '''
             }
         }
@@ -22,7 +20,6 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
         }
